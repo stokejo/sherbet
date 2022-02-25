@@ -1,7 +1,7 @@
 // Adapted from https://github.com/crossbeam-rs/crossbeam/blob/crossbeam-utils-0.8.7/crossbeam-utils/src/atomic/seq_lock_wide.rs.
 
 use core::{
-    mem,
+    mem::ManuallyDrop,
     sync::atomic::{self, AtomicUsize, Ordering},
 };
 
@@ -111,14 +111,14 @@ impl SeqLockWriteGuard {
     /// Releases the lock without incrementing the stamp.
     #[inline]
     pub(crate) fn abort(self) {
+        // We specifically don't want to call drop(), since that's
+        // what increments the stamp.
+        let this = ManuallyDrop::new(self);
+
         // Restore the stamp.
         //
         // Release ordering for synchronizing with `optimistic_read`.
-        self.lock.state_lo.store(self.state_lo, Ordering::Release);
-
-        // We specifically don't want to call drop(), since that's
-        // what increments the stamp.
-        mem::forget(self);
+        this.lock.state_lo.store(this.state_lo, Ordering::Release);
     }
 }
 
