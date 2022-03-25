@@ -1,5 +1,3 @@
-#![cfg(any(target_arch = "x86_64", target_arch = "aarch64"))]
-
 // Atomic{I,U}128 implementation using core::intrinsics.
 //
 // Refs: https://github.com/rust-lang/rust/blob/1.59.0/library/core/src/sync/atomic.rs
