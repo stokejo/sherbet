@@ -4,7 +4,13 @@
 
 #![cfg_attr(rustfmt, rustfmt::skip)]
 mod sys_sysctl;
+pub use sys_sysctl::SYSCTL_VERS_1;
+pub use sys_sysctl::CTL_QUERY;
+pub use sys_sysctl::sysctl;
 pub use sys_sysctl::sysctlbyname;
+pub use sys_sysctl::sysctlnode;
+mod sys_syscall;
+pub use sys_syscall::SYS___sysctl;
 mod aarch64_armreg;
 pub use aarch64_armreg::aarch64_sysctl_cpu_id;
 pub type c_char = u8;
