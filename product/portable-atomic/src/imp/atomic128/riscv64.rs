@@ -18,8 +18,6 @@ Generated asm:
 - riscv64 (+experimental-zacas) https://godbolt.org/z/5Kc17T1W8
 */
 
-// TODO: 64-bit atomic using amocas.d for riscv32
-
 include!("macros.rs");
 
 // TODO
@@ -31,7 +29,7 @@ include!("macros.rs");
 // See detect/auxv.rs for more.
 #[cfg(test)] // TODO
 #[cfg(not(portable_atomic_no_outline_atomics))]
-#[cfg(any(test, portable_atomic_outline_atomics))] // TODO(riscv64): currently disabled by default
+#[cfg(any(test, portable_atomic_outline_atomics))] // TODO(riscv): currently disabled by default
 #[cfg(any(
     test,
     not(any(
