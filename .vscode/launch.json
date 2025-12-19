@@ -15,7 +15,7 @@
 			"program": "${workspaceFolder}/_obj_/riscv32e-unknown-none-elf/debug/ch32v003",
 			"request": "launch",
 			"miDebuggerPath": "riscv32-unknown-linux-gnu-gdb",
-			"miDebuggerServerAddress": "192.168.1.100:1442",
+			"miDebuggerServerAddress": "localhost:3333",
 			"stopAtConnect": true,
 			"cwd": "${workspaceFolder}",
 			"MIMode": "gdb",
