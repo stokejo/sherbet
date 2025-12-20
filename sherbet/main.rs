@@ -1,8 +1,11 @@
 #![no_std]
+extern crate alloc;
 use core::panic::PanicInfo;
 
+pub mod allocator;
 pub mod clock;
 pub mod interface;
+pub mod scheduler;
 
 pub unsafe fn reloc() {
 	extern "C" {

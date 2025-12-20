@@ -2,6 +2,6 @@
 	"rust-analyzer.cargo.target": "riscv32e-unknown-none-elf",
 	"rust-analyzer.cargo.allTargets": false,
 	"rust-analyzer.check.extraArgs": [
-		"-Zbuild-std=core"
+		"-Zbuild-std=core,alloc"
 	]
 }

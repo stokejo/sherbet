@@ -11,3 +11,4 @@ license = "Apache-2.0"
 edition = "2021"
 
 [dependencies]
+portable-atomic = { version = "1", default-features = false }

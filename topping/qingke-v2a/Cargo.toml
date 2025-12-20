@@ -12,3 +12,6 @@ edition = "2021"
 
 [dependencies]
 sherbet = { workspace = true }
+portable-atomic = { version = "1", default-features = false, features = [
+    "unsafe-assume-single-core",
+] }

@@ -46,4 +46,9 @@ SECTIONS
 		* ( .bss .bss.* )
 		_wipe_hi = .;
 	} >RAM
+
+	.heap ( NOLOAD ) : {
+		_heap_va = .;
+		_heap_hi = ORIGIN ( RAM ) + LENGTH ( RAM );
+	} >RAM
 }
