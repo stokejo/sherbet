@@ -12,6 +12,11 @@ edition = "2021"
 
 [dependencies]
 sherbet = { workspace = true }
-portable-atomic = { version = "1", default-features = false, features = [
+rv32 = { workspace = true }
+
+portable-atomic = { version = "1", features = [
     "unsafe-assume-single-core",
-] }
+], default-features = false }
+critical-section = { version = "1", features = [
+    "restore-state-bool",
+], default-features = false }

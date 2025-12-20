@@ -1,6 +1,6 @@
-use core::arch::global_asm;
+use core::arch::{asm, global_asm};
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 unsafe extern "C" fn required_interrupt() {
 	loop {}
 }
@@ -17,13 +17,19 @@ global_asm!(
 );
 
 pub unsafe fn setup() {
-	core::arch::asm!(
-		//
-		// We set mtvec[0]=1 so that processor use vector table.
-		//
-		"la t0, _TRAP_VECTOR_BASE_ADDR",
-		"addi t0, t0, 1",
-		"csrw mtvec, t0",
-		out("t0") _,
-	)
+	unsafe {
+		core::arch::asm!(
+			//
+			// We set mtvec[0]=1 so that processor use vector table.
+			//
+			"la t0, _TRAP_VECTOR_BASE_ADDR",
+			"addi t0, t0, 1",
+			"csrw mtvec, t0",
+			out("t0") _,
+		);
+	}
+}
+
+pub unsafe fn enable() {
+	unsafe { asm!("csrs mstatus, 0b1000") };
 }

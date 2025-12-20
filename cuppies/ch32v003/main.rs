@@ -1,5 +1,6 @@
 #![no_main]
 #![no_std]
+extern crate alloc;
 extern crate rv32;
 extern crate sherbet;
 

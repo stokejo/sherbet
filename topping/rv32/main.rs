@@ -3,6 +3,7 @@ use core::arch::global_asm;
 
 pub mod interrupt;
 pub mod pmp;
+pub mod sync;
 
 global_asm!(
 	// Hardware entry point. Must be single
