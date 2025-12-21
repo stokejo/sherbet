@@ -11,7 +11,7 @@ unsafe impl Impl for SingleHartCriticalSection {
 	unsafe fn acquire() -> RawRestoreState {
 		let mut mstatus: usize = 0;
 		unsafe { asm!("csrrci {}, mstatus, 0b1000", out(reg) mstatus) };
-		((mstatus & 0b1000) != 0).into()
+		(mstatus & 0b1000) != 0
 	}
 
 	unsafe fn release(restore_state: RawRestoreState) {

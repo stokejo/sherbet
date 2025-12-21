@@ -1,11 +1,10 @@
-use core::arch::{asm, global_asm};
-
 #[unsafe(no_mangle)]
 unsafe extern "C" fn required_interrupt() {
 	loop {}
 }
 
-global_asm!(
+#[cfg(feature = "interrupt")]
+core::arch::global_asm!(
 	".section .text.interrupt",
 	".weak __EXCEPTION_AND_INTERRUPT_VECTOR_TABLE",
 	".option push",
@@ -31,5 +30,5 @@ pub unsafe fn setup() {
 }
 
 pub unsafe fn enable() {
-	unsafe { asm!("csrs mstatus, 0b1000") };
+	unsafe { core::arch::asm!("csrs mstatus, 0b1000") };
 }
