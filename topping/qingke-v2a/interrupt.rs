@@ -1,3 +1,5 @@
+pub use rv32::interrupt::allow;
+
 unsafe extern "C" fn clock_tick_interrupt() {
 	sherbet::clock::tick();
 }

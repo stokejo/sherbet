@@ -29,6 +29,6 @@ pub unsafe fn setup() {
 	}
 }
 
-pub unsafe fn enable() {
+pub unsafe fn allow() {
 	unsafe { core::arch::asm!("csrs mstatus, 0b1000") };
 }

@@ -15,6 +15,6 @@ unsafe impl Impl for SingleHartCriticalSection {
 	}
 
 	unsafe fn release(restore_state: RawRestoreState) {
-		restore_state.then(|| unsafe { interrupt::enable() });
+		restore_state.then(|| unsafe { interrupt::allow() });
 	}
 }
