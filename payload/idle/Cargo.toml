@@ -1,0 +1,8 @@
+lib.path = "main.rs"
+
+[package]
+name = "idle"
+version = "0.0.0"
+edition = "2024"
+
+[dependencies]

@@ -5,6 +5,7 @@ members = [
     "topping/qingke-v2a",
     "topping/rv32",
     "sherbet",
+    "payload/idle",
 ]
 resolver = "2"
 
@@ -20,3 +21,4 @@ codegen-units = 1
 qingke-v2a = { path = "topping/qingke-v2a" }
 rv32 = { path = "topping/rv32" }
 sherbet = { path = "sherbet" }
+idle = { path = "payload/idle" }
