@@ -18,14 +18,34 @@ type Taski = hp::Vec<PinBoxFut, 2>;
 static TASKI: Mutex<RefCell<Taski>> = //
 	Mutex::new(RefCell::new(hp::Vec::new()));
 
-// =========================================================================
-
 pub fn spawn(t: PinBoxFut) -> Result<(), PinBoxFut> {
 	critical_section::with(|cs| {
 		let mut taski = TASKI.borrow_ref_mut(cs);
 		taski.push(t)
 	})
 }
+
+// =========================================================================
+
+struct Yield {
+	inner: bool,
+}
+
+impl Future for Yield {
+	type Output = ();
+	fn poll(mut self: Pin<&mut Self>, _: &mut Context<'_>) -> Poll<()> {
+		self.inner.then_some(Poll::Ready(())).unwrap_or_else(|| {
+			self.inner = true;
+			Poll::Pending
+		})
+	}
+}
+
+pub async fn yield_now() {
+	Yield { inner: false }.await;
+}
+
+// =========================================================================
 
 fn schedule<'a>(
 	t: &mut PinBoxFut,

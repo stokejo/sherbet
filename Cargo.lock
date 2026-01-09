@@ -46,6 +46,9 @@ dependencies = [
 [[package]]
 name = "idle"
 version = "0.0.0"
+dependencies = [
+ "sherbet",
+]
 
 [[package]]
 name = "portable-atomic"
