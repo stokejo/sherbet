@@ -7,7 +7,7 @@ use core::{
 };
 
 use alloc::boxed::Box;
-use critical_section::Mutex;
+use critical_section::Mutex as FakeMutex;
 use heapless as hp;
 
 // =========================================================================
@@ -15,8 +15,8 @@ use heapless as hp;
 type PinBoxFut = Pin<Box<dyn Future<Output = ()> + Send>>;
 type Taski = hp::Vec<PinBoxFut, 2>;
 
-static TASKI: Mutex<RefCell<Taski>> = //
-	Mutex::new(RefCell::new(hp::Vec::new()));
+static TASKI: FakeMutex<RefCell<Taski>> = //
+	FakeMutex::new(RefCell::new(hp::Vec::new()));
 
 pub fn spawn(t: PinBoxFut) -> Result<(), PinBoxFut> {
 	critical_section::with(|cs| {
