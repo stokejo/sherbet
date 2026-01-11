@@ -1,3 +1,4 @@
+#[cfg(feature = "interrupt")]
 #[unsafe(no_mangle)]
 unsafe extern "C" fn required_interrupt() {
 	loop {}
