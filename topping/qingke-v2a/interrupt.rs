@@ -3,13 +3,31 @@ pub use rv32::interrupt::allow;
 
 // =========================================================================
 
+#[unsafe(no_mangle)]
 unsafe extern "C" fn clock_tick_interrupt() {
 	sherbet::clock::ticka();
-	(super::clock::reset(), arch::asm!("addi sp, sp, 4", "mret"));
+	super::clock::reset();
 }
 
+#[unsafe(naked)]
+unsafe extern "C" fn clock_tick_interrupt_wrapper() {
+	arch::naked_asm!(
+		"call clock_tick_interrupt",
+		"mret" //
+	)
+}
+
+#[unsafe(no_mangle)]
 unsafe extern "C" fn required_interrupt() {
 	loop {}
+}
+
+#[unsafe(naked)]
+unsafe extern "C" fn required_interrupt_wrapper() {
+	arch::naked_asm!(
+		"call required_interrupt",
+		"mret" //
+	)
 }
 
 // =========================================================================
@@ -30,8 +48,8 @@ static __EXCEPTION_AND_INTERRUPT_VECTOR_TABLE: [Option<
 	unsafe extern "C" fn(),
 >; 15] = [
 	None, // int 1
-	Some(required_interrupt),
-	Some(required_interrupt),
+	Some(required_interrupt_wrapper),
+	Some(required_interrupt_wrapper),
 	None,
 	None,
 	None,
@@ -40,7 +58,7 @@ static __EXCEPTION_AND_INTERRUPT_VECTOR_TABLE: [Option<
 	None,
 	None,
 	None,
-	Some(clock_tick_interrupt),
+	Some(clock_tick_interrupt_wrapper),
 	None,
 	None,
 	None,
