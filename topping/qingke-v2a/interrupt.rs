@@ -87,16 +87,56 @@ pub unsafe fn setup() {
 
 // =========================================================================
 
-const PFIC_IENR1: *mut u32 = 0xE000E100 as *mut u32;
-pub const ALLOW: bool = true;
+#[repr(C)]
+pub struct ProgrammableFastInterruptController {
+	__0: [u32; 64],
+	pub r32_pfic_ienr: [u32; 8],
+	__1: [u32; 24],
+	pub r32_pfic_irer: [u32; 8],
+}
 
-pub unsafe fn set(interrupt: u32, allow: bool) {
-	let offset = (interrupt / 32) as isize;
-	let bit = interrupt % 32;
+impl ProgrammableFastInterruptController {
+	unsafe fn get() -> &'static mut Self {
+		unsafe { (0xE000E000 as *mut Self).as_mut().unwrap_unchecked() }
+	}
+}
+
+const _: () = {
+	use core::mem::offset_of;
+	assert!(
+		offset_of!(
+			ProgrammableFastInterruptController,
+			r32_pfic_ienr //
+		) == 0x100
+	);
+	assert!(
+		offset_of!(
+			ProgrammableFastInterruptController,
+			r32_pfic_irer //
+		) == 0x180
+	);
+};
+
+// =========================================================================
+
+pub const DISABLE: bool = false;
+pub const ENABLE: bool = true;
+
+pub unsafe fn set(interrupt: u8, allow: bool) {
+	let programmable_fast_interrupt_controller = unsafe {
+		ProgrammableFastInterruptController::get() //
+	};
+	let (offset, bit) = ((interrupt / 32) as usize, interrupt % 32);
+	let register = allow
+		.then(|| {
+			&mut programmable_fast_interrupt_controller.r32_pfic_ienr
+				[offset]
+		})
+		.unwrap_or_else(|| {
+			&mut programmable_fast_interrupt_controller.r32_pfic_irer
+				[offset]
+		});
 	unsafe {
-		ptr::write_volatile(
-			PFIC_IENR1.offset(offset),
-			(allow as u32) << bit,
-		);
+		ptr::write_volatile(register, 1 << bit);
 	}
 }

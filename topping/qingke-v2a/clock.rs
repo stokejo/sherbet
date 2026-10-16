@@ -54,7 +54,7 @@ impl SysTick {
 const STK_AUTO_RELOAD_ENABLE: u32 = 1 << 3;
 const STK_INTERRUPT_ENABLE: u32 = 1 << 1;
 const STK_ENABLE: u32 = 1 << 0;
-const STK_INTERRUPT_NUMBER: u32 = 12;
+const STK_INTERRUPT_NUMBER: u8 = 12;
 
 pub fn setup() {
 	let reset_and_clock_control = unsafe { ResetAndClockControl::get() };
@@ -82,7 +82,7 @@ pub fn setup() {
 			&mut sys_tick.r32_stk_ctlr,
 			STK_AUTO_RELOAD_ENABLE | STK_INTERRUPT_ENABLE | STK_ENABLE,
 		);
-		interrupt::set(STK_INTERRUPT_NUMBER, interrupt::ALLOW);
+		interrupt::set(STK_INTERRUPT_NUMBER, interrupt::ENABLE);
 	};
 }
 
