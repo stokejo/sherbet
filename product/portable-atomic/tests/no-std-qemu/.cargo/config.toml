@@ -1,0 +1,54 @@
+# See https://github.com/taiki-e/semihosting/blob/HEAD/tools/qemu-system-runner.sh
+
+# Cortex-M
+[target.thumbv6m-none-eabi]
+runner = "qemu-system-arm -M lm3s6965evb -cpu cortex-m0 -display none -semihosting -kernel"
+[target.thumbv7m-none-eabi]
+runner = "qemu-system-arm -M lm3s6965evb -cpu cortex-m3 -display none -semihosting -kernel"
+[target.thumbv7em-none-eabi]
+runner = "qemu-system-arm -M lm3s6965evb -cpu cortex-m4 -display none -semihosting -kernel"
+[target.thumbv7em-none-eabihf]
+runner = "qemu-system-arm -M lm3s6965evb -cpu cortex-m4 -display none -semihosting -kernel"
+[target.thumbv8m.base-none-eabi]
+# TODO: As of QEMU 10.2, QEMU doesn't support -cpu cortex-m23
+runner = "qemu-system-arm -M lm3s6965evb -cpu cortex-m33 -display none -semihosting -kernel"
+[target.thumbv8m.main-none-eabi]
+runner = "qemu-system-arm -M lm3s6965evb -cpu cortex-m33 -display none -semihosting -kernel"
+[target.thumbv8m.main-none-eabihf]
+runner = "qemu-system-arm -M lm3s6965evb -cpu cortex-m33 -display none -semihosting -kernel"
+
+# Armv4T
+[target.armv4t-none-eabi]
+runner = "qemu-system-arm -M versatilepb -cpu ti925t -display none -semihosting -kernel"
+[target.thumbv4t-none-eabi]
+runner = "qemu-system-arm -M versatilepb -cpu ti925t -display none -semihosting -kernel"
+
+# Armv5TE
+[target.armv5te-none-eabi]
+runner = "qemu-system-arm -M versatilepb -cpu arm926 -display none -semihosting -kernel"
+[target.thumbv5te-none-eabi]
+runner = "qemu-system-arm -M versatilepb -cpu arm926 -display none -semihosting -kernel"
+
+# Armv6
+[target.armv6-none-eabi]
+runner = "qemu-system-arm -M versatilepb -cpu arm1176 -display none -semihosting -kernel"
+[target.armv6-none-eabihf]
+runner = "qemu-system-arm -M versatilepb -cpu arm1176 -display none -semihosting -kernel"
+[target.thumbv6-none-eabi]
+runner = "qemu-system-arm -M versatilepb -cpu arm1176 -display none -semihosting -kernel"
+
+# Armv7-A
+[target.armv7a-none-eabi]
+runner = "qemu-system-arm -M xilinx-zynq-a9 -cpu cortex-a9 -display none -semihosting -kernel"
+[target.armv7a-none-eabihf]
+runner = "qemu-system-arm -M xilinx-zynq-a9 -cpu cortex-a9 -display none -semihosting -kernel"
+
+# Armv8-R
+[target.armv8r-none-eabihf]
+runner = "qemu-system-arm -M mps3-an536 -cpu cortex-r52 -display none -semihosting -kernel"
+
+# RISC-V
+[target.'cfg(all(target_arch = "riscv32", target_os = "none"))']
+runner = "qemu-system-riscv32 -M virt -cpu max -display none -semihosting -kernel"
+[target.'cfg(all(target_arch = "riscv64", target_os = "none"))']
+runner = "qemu-system-riscv64 -M virt -cpu max -display none -semihosting -kernel"
