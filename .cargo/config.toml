@@ -7,3 +7,4 @@ heapless = { path = "product/heapless" }
 portable-atomic = { path = "product/portable-atomic" }
 hash32 = { path = "product/hash32" }
 byteorder = { path = "product/byteorder" }
+stable_deref_trait = { path = "product/stable_deref_trait" }
