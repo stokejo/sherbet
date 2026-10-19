@@ -1,2 +1,5 @@
 [build]
 target-dir = "_obj_"
+
+[patch.crates-io]
+critical-section = { path = "product/critical-section" }
